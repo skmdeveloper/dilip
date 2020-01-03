@@ -1,6 +1,7 @@
 package com.referal.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -28,7 +29,9 @@ public class RefController {
 	public EmailService emailService;
 	
 	@RequestMapping("/refer")
-	  public String findById(@RequestParam("byreferid") String byreferid,@RequestParam("toreferid") String toreferid) {
+	  public String findById(@RequestParam("byreferid") String byreferid,
+			  				 @RequestParam("toreferid") String toreferid,
+			  				 @RequestParam("referCode") String referCode) {
 	   
 		for (Entry<Integer, User> entry : userTable.entrySet())  {
 			
@@ -38,6 +41,15 @@ public class RefController {
 				
 				List<Integer> referId = user.getReferId();
 				referId.add(Integer.parseInt(toreferid));
+				user.setReferId(referId);
+				
+				Map<Integer, Integer> referalstatus = new HashMap<>();
+				referalstatus.put(Integer.parseInt(toreferid), 0);
+				
+				user.setReferalstatus(referalstatus);
+				
+				
+				
 				
 			}
 			
